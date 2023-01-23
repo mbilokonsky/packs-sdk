@@ -88,7 +88,7 @@ ___
 • `Optional` **networkDomain**: `string` \| `string`[]
 
 Which domain(s) should get auth credentials, when a pack is configured with multiple domains.
-Packs configured with only one domain or with requiredsEndpointUrl set to true can omit this.
+Packs configured with only one domain or with requiresEndpointUrl set to true can omit this.
 
 Using multiple authenticated network domains is uncommon and requires Coda approval.
 
@@ -138,7 +138,7 @@ ___
 
 • `Optional` **uxConfig**: `Object`
 
-Configuration for labels to show in the UI when the user sets up a new acount.
+Configuration for labels to show in the UI when the user sets up a new account.
 
 #### Type declaration
 
