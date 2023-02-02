@@ -1494,6 +1494,8 @@ export interface SyncTableOptions<
    * sync tables that have a dynamic schema.
    */
   dynamicOptions?: DynamicOptions;
+
+  autocomplete?: (ctx: CellAutocompleteCtx) => Promise<any[]>;
 }
 
 /**
@@ -1588,6 +1590,14 @@ export interface DynamicSyncTableOptions<
    * in placeholderSchema will be rendered by default after the sync.
    */
   placeholderSchema?: SchemaT;
+
+  autocomplete?: (ctx: CellAutocompleteCtx) => Promise<any[]>;
+}
+
+interface CellAutocompleteCtx {
+  getPropName(): string;
+  getEditedValue(propName: string): any;
+  getSearchString(): string;
 }
 
 /**

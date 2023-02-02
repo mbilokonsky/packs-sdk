@@ -126,6 +126,9 @@ pack.addDynamicSyncTable({
   description: 'FooDynDesc',
   getName: async () => 'name',
   getDisplayUrl: async () => 'display url',
+  autocomplete: async _ctx => {
+    return [];
+  },
   getSchema: async () => {
     return {
       type: coda.ValueType.Object,

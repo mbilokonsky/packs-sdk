@@ -21,6 +21,26 @@ Input options for defining a sync table. See [makeSyncTable](../functions/core.m
 
 ## Properties
 
+### autocomplete
+
+• `Optional` **autocomplete**: (`ctx`: `CellAutocompleteCtx`) => `Promise`<`any`[]\>
+
+#### Type declaration
+
+▸ (`ctx`): `Promise`<`any`[]\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `ctx` | `CellAutocompleteCtx` |
+
+##### Returns
+
+`Promise`<`any`[]\>
+
+___
+
 ### connectionRequirement
 
 • `Optional` **connectionRequirement**: [`ConnectionRequirement`](../enums/core.ConnectionRequirement.md)

@@ -2754,6 +2754,7 @@ export interface SyncTableOptions<K extends string, L extends string, ParamDefsT
 	 * sync tables that have a dynamic schema.
 	 */
 	dynamicOptions?: DynamicOptions;
+	autocomplete?: (ctx: CellAutocompleteCtx) => Promise<any[]>;
 }
 /**
  * Options provided when defining a dynamic sync table.
@@ -2842,6 +2843,12 @@ export interface DynamicSyncTableOptions<K extends string, L extends string, Par
 	 * in placeholderSchema will be rendered by default after the sync.
 	 */
 	placeholderSchema?: SchemaT;
+	autocomplete?: (ctx: CellAutocompleteCtx) => Promise<any[]>;
+}
+export interface CellAutocompleteCtx {
+	getPropName(): string;
+	getEditedValue(propName: string): any;
+	getSearchString(): string;
 }
 /**
  * Wrapper to produce a sync table definition. All (non-dynamic) sync tables should be created

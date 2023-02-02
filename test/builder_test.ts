@@ -99,6 +99,10 @@ describe('Builder', () => {
       getSchema,
       getDisplayUrl,
       listDynamicUrls,
+      autocomplete: async autoCompleteContext => {
+        autoCompleteContext.getSearchString();
+        return [];
+      },
       formula: {
         name: 'Ignored',
         description: '',
