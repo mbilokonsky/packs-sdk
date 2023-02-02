@@ -832,3 +832,13 @@ export enum PrecannedDateRange {
    */
   Everything = 'everything',
 }
+
+/**
+ * Get context related to autocomplete.
+ */
+export interface CellAutocompleteCtx {
+  getPropertyName(): string;
+  getEditedValue(propName: string): any;
+  getSearchString(): string;
+  schema?: ArraySchema;
+}

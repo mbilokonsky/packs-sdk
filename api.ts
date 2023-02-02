@@ -1594,10 +1594,14 @@ export interface DynamicSyncTableOptions<
   autocomplete?: (ctx: CellAutocompleteCtx) => Promise<any[]>;
 }
 
-interface CellAutocompleteCtx {
-  getPropName(): string;
+/**
+ * Get context related to autocomplete.
+ */
+export interface CellAutocompleteCtx {
+  getPropertyName(): string;
   getEditedValue(propName: string): any;
   getSearchString(): string;
+  schema?: ArraySchema;
 }
 
 /**

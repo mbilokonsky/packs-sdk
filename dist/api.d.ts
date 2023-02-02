@@ -986,10 +986,14 @@ export interface DynamicSyncTableOptions<K extends string, L extends string, Par
     placeholderSchema?: SchemaT;
     autocomplete?: (ctx: CellAutocompleteCtx) => Promise<any[]>;
 }
-interface CellAutocompleteCtx {
-    getPropName(): string;
+/**
+ * Get context related to autocomplete.
+ */
+export interface CellAutocompleteCtx {
+    getPropertyName(): string;
     getEditedValue(propName: string): any;
     getSearchString(): string;
+    schema?: ArraySchema;
 }
 /**
  * Wrapper to produce a sync table definition. All (non-dynamic) sync tables should be created
