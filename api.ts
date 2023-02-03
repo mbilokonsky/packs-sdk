@@ -230,6 +230,7 @@ export interface SyncTableDef<
   entityName?: string;
   /** See {@link DynamicOptions.defaultAddDynamicColumns} */
   defaultAddDynamicColumns?: boolean;
+  autocompleteCell?: MetadataFormula;
 }
 
 /**
@@ -252,6 +253,7 @@ export interface DynamicSyncTableDef<
   getDisplayUrl: MetadataFormula;
   /** See {@link DynamicSyncTableOptions.listDynamicUrls} */
   listDynamicUrls?: MetadataFormula;
+  autocompleteCell?: MetadataFormula;
 }
 
 /**
@@ -1629,6 +1631,7 @@ export function makeSyncTable<
   identityName,
   schema: inputSchema,
   formula,
+  autocomplete,
   connectionRequirement,
   dynamicOptions = {},
 }: SyncTableOptions<K, L, ParamDefsT, SchemaDefT>): SyncTableDef<K, L, ParamDefsT, SchemaT> {
@@ -1638,6 +1641,8 @@ export function makeSyncTable<
     executeUpdate: wrappedExecuteUpdate,
     ...definition
   } = maybeRewriteConnectionForFormula(formula, connectionRequirement);
+
+  const wrappedAutocomplete = maybeRewriteConnectionForFormula(autocomplete, connectionRequirement);
 
   // Since we mutate schemaDef, we need to make a copy so the input schema can be reused across sync tables.
   const schemaDef = deepCopy(inputSchema);
@@ -1713,6 +1718,7 @@ export function makeSyncTable<
       connectionRequirement: definition.connectionRequirement || connectionRequirement,
       resultType: Type.object as any,
     },
+    autocompleteCell: wrappedAutocomplete,
     getSchema: maybeRewriteConnectionForFormula(getSchema, connectionRequirement),
     entityName,
     defaultAddDynamicColumns,
