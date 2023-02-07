@@ -1642,7 +1642,21 @@ export function makeSyncTable<
     ...definition
   } = maybeRewriteConnectionForFormula(formula, connectionRequirement);
 
-  const wrappedAutocomplete = maybeRewriteConnectionForFormula(autocomplete, connectionRequirement);
+  const wrappedAutocomplete = autocomplete
+    ? makeMetadataFormula((_context, _search, _formulaContext) =>
+        autocomplete({
+          getPropertyName() {
+            throw new Error('Function not implemented.');
+          },
+          getEditedValue(_propName: string) {
+            throw new Error('Function not implemented.');
+          },
+          getSearchString(): string {
+            throw new Error('Function not implemented.');
+          },
+        }),
+      )
+    : undefined;
 
   // Since we mutate schemaDef, we need to make a copy so the input schema can be reused across sync tables.
   const schemaDef = deepCopy(inputSchema);

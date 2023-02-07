@@ -664,9 +664,22 @@ exports.makeObjectFormula = makeObjectFormula;
  *
  * See [Normalization](/index.html#normalization) for more information about schema normalization.
  */
-function makeSyncTable({ name, description, identityName, schema: inputSchema, formula, connectionRequirement, dynamicOptions = {}, }) {
+function makeSyncTable({ name, description, identityName, schema: inputSchema, formula, autocomplete, connectionRequirement, dynamicOptions = {}, }) {
     const { getSchema: getSchemaDef, entityName, defaultAddDynamicColumns } = dynamicOptions;
     const { execute: wrappedExecute, executeUpdate: wrappedExecuteUpdate, ...definition } = maybeRewriteConnectionForFormula(formula, connectionRequirement);
+    const wrappedAutocomplete = autocomplete
+        ? makeMetadataFormula((_context, _search, _formulaContext) => autocomplete({
+            getPropertyName() {
+                throw new Error('Function not implemented.');
+            },
+            getEditedValue(_propName) {
+                throw new Error('Function not implemented.');
+            },
+            getSearchString() {
+                throw new Error('Function not implemented.');
+            },
+        }))
+        : undefined;
     // Since we mutate schemaDef, we need to make a copy so the input schema can be reused across sync tables.
     const schemaDef = (0, object_utils_1.deepCopy)(inputSchema);
     // Hydrate the schema's identity.
@@ -731,6 +744,7 @@ function makeSyncTable({ name, description, identityName, schema: inputSchema, f
             connectionRequirement: definition.connectionRequirement || connectionRequirement,
             resultType: api_types_3.Type.object,
         },
+        autocompleteCell: wrappedAutocomplete,
         getSchema: maybeRewriteConnectionForFormula(getSchema, connectionRequirement),
         entityName,
         defaultAddDynamicColumns,
