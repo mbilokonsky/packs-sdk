@@ -958,7 +958,7 @@ const baseSyncTableSchema = {
     entityName: z.string().optional(),
     defaultAddDynamicColumns: z.boolean().optional(),
     // autocomplete: z.function().optional(),
-    autocompleteCell: z.function().optional(),
+    autocompleteCell: z.unknown().optional(),
     // TODO(patrick): Make identityName non-optional after SDK v1.0.0 is required
     identityName: z
         .string()

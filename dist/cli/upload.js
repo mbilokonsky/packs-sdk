@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleUpload = void 0;
 const v1_1 = require("../helpers/external-api/v1");
@@ -82,7 +83,7 @@ async function handleUpload({ intermediateOutputDirectory, manifestFile, codaApi
     });
     const manifest = await (0, helpers_3.importManifest)(bundlePath);
     // Since package.json isn't in dist, we grab it from the root directory instead.
-    const packageJson = await Promise.resolve().then(() => __importStar(require((0, helpers_4.isTestCommand)() ? '../package.json' : '../../package.json')));
+    const packageJson = await (_a = (0, helpers_4.isTestCommand)() ? '../package.json' : '../../package.json', Promise.resolve().then(() => __importStar(require(_a))));
     const codaPacksSDKVersion = packageJson.version;
     const apiKey = (0, config_storage_1.getApiKey)(codaApiEndpoint);
     if (!apiKey) {
