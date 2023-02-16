@@ -26,6 +26,7 @@
     "cross-fetch": "^3.1.5",
     "es6-promise": "^4.2.8",
     "esbuild": "^0.16.17",
+    "@esbuild/darwin-arm64": "^0.16.17",
     "exorcist": "^2.0.0",
     "express": "4.18.2",
     "fs-extra": "^11.1.0",
@@ -118,9 +119,11 @@
     "typedoc": "^0.23.10",
     "typedoc-plugin-markdown": "^3.14.0"
   },
-  "resolutions": {
+ "disabled_resolutions":{
     "**/request/qs": "^6.5.3",
-    "release-it/node-fetch": "^3.2.10",
+    "release-it/node-fetch": "^3.2.10"
+ },
+  "resolutions": {
     "ansi-regex": "^5.0.1",
     "got": "^12.1.0",
     "jsprim": "^2.0.2",
