@@ -668,17 +668,26 @@ function makeSyncTable({ name, description, identityName, schema: inputSchema, f
     const { getSchema: getSchemaDef, entityName, defaultAddDynamicColumns } = dynamicOptions;
     const { execute: wrappedExecute, executeUpdate: wrappedExecuteUpdate, ...definition } = maybeRewriteConnectionForFormula(formula, connectionRequirement);
     const wrappedAutocomplete = autocomplete
-        ? makeMetadataFormula((_context, _search, _formulaContext) => autocomplete({
-            getPropertyName() {
-                throw new Error('Function not implemented.');
-            },
-            getEditedValue(_propName) {
-                throw new Error('Function not implemented.');
-            },
-            getSearchString() {
-                throw new Error('Function not implemented.');
-            },
-        }))
+        ? makeMetadataFormula((_context, search, formulaContext) => {
+            var _a;
+            const propertyName = formulaContext === null || formulaContext === void 0 ? void 0 : formulaContext.__coda__propertyName;
+            if (formulaContext) {
+                delete formulaContext.__coda__propertyName;
+            }
+            console.log(`Schema is ${JSON.stringify((_a = _context.sync) === null || _a === void 0 ? void 0 : _a.schema)}`);
+            const context = {
+                getPropertyName() {
+                    return propertyName;
+                },
+                getEditedValue(propName) {
+                    return formulaContext === null || formulaContext === void 0 ? void 0 : formulaContext[propName];
+                },
+                getSearchString() {
+                    return search;
+                },
+            };
+            return autocomplete(context);
+        })
         : undefined;
     // Since we mutate schemaDef, we need to make a copy so the input schema can be reused across sync tables.
     const schemaDef = (0, object_utils_1.deepCopy)(inputSchema);

@@ -65,6 +65,7 @@ export interface CellAutocompleteFormulaSpecification {
   type: FormulaType.Metadata;
   metadataFormulaType: MetadataFormulaType.CellAutocomplete;
   syncTableName: string;
+  // propertyName: string;
 }
 
 export type FormulaSpecification =

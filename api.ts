@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type {ArraySchema} from './schema';
 import type {ArrayType} from './api_types';
 import type {BooleanSchema} from './schema';
@@ -1239,6 +1240,41 @@ export function makeMetadataFormula(
   });
 }
 
+// type CellAutocompleteMetadataFunction = (
+//   context: ExecutionContext,
+//   search: string,
+//   propertyName: string,
+//   formulaContext?: MetadataContext,
+// ) => Promise<MetadataFormulaResultType | MetadataFormulaResultType[] | ArraySchema | ObjectSchema<any, any>>;
+
+// function makeCellAutocompleteMetadataFormula(
+//   execute: CellAutocompleteMetadataFunction,
+//   options?: {connectionRequirement?: ConnectionRequirement},
+// ): MetadataFormula {
+//   return makeObjectFormula({
+//     name: 'getMetadata',
+//     description: 'Gets metadata',
+//     // Formula context is serialized here because we do not want to pass objects into
+//     // regular pack functions (which this is)
+//     execute([search, serializedFormulaContext, propertyName], context) {
+//       let formulaContext = {} as MetadataContext;
+//       try {
+//         formulaContext = JSON.parse(serializedFormulaContext);
+//       } catch (err: any) {
+//         //  Ignore.
+//       }
+//       return execute(context, search, propertyName, formulaContext) as any;
+//     },
+//     parameters: [
+//       makeStringParameter('search', 'Metadata to search for', {optional: true}),
+//       makeStringParameter('formulaContext', 'Serialized JSON for metadata', {optional: true}),
+//       makeStringParameter('propertyName', 'Property name', {optional: true}),
+//     ],
+//     examples: [],
+//     connectionRequirement: options?.connectionRequirement || ConnectionRequirement.Optional,
+//   });
+// }
+
 /**
  * A result from a parameter autocomplete function that pairs a UI display value with
  * the underlying option that will be used in the formula when selected.
@@ -1643,19 +1679,27 @@ export function makeSyncTable<
   } = maybeRewriteConnectionForFormula(formula, connectionRequirement);
 
   const wrappedAutocomplete = autocomplete
-    ? makeMetadataFormula((_context, _search, _formulaContext) =>
-        autocomplete({
+    ? makeMetadataFormula((_context, search, formulaContext) => {
+        const propertyName = formulaContext?.__coda__propertyName;
+        if (formulaContext) {
+          delete formulaContext.__coda__propertyName;
+        }
+
+        console.log(`Schema is ${JSON.stringify(_context.sync?.schema)}`);
+
+        const context: CellAutocompleteCtx = {
           getPropertyName() {
-            throw new Error('Function not implemented.');
+            return propertyName;
           },
-          getEditedValue(_propName: string) {
-            throw new Error('Function not implemented.');
+          getEditedValue(propName: string) {
+            return formulaContext?.[propName];
           },
           getSearchString(): string {
-            throw new Error('Function not implemented.');
+            return search;
           },
-        }),
-      )
+        };
+        return autocomplete(context);
+      })
     : undefined;
 
   // Since we mutate schemaDef, we need to make a copy so the input schema can be reused across sync tables.

@@ -80,8 +80,11 @@ function doFindAndExecutePackFunction({ params, formulaSpec, manifest, execution
                     }
                     break;
                 case types_3.MetadataFormulaType.CellAutocomplete:
+                    console.log(`WEITZMAN: Thunk detected cell autocomplete function...`);
                     const syncTable = syncTables === null || syncTables === void 0 ? void 0 : syncTables.find(table => table.name === formulaSpec.syncTableName);
                     const autocompleteFn = (0, ensure_1.ensureExists)(syncTable === null || syncTable === void 0 ? void 0 : syncTable.autocompleteCell);
+                    // const propertyName = formulaSpec.propertyName;
+                    // TODO(dweitzman): How should this be passed along to the cell autocomplete context?...
                     return autocompleteFn.execute(params, executionContext);
                     break;
                 case types_3.MetadataFormulaType.PostSetupSetEndpoint:
