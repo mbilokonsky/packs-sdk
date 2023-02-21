@@ -1056,6 +1056,11 @@
   resolved "https://registry.npmjs.org/@tsconfig/node16/-/node16-1.0.2.tgz"
   integrity sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==
 
+"@types/abbrev@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@types/abbrev/-/abbrev-1.1.2.tgz#22e1d47e88a68cf4b0ffd560d1abcacee3739803"
+  integrity sha512-GlJGHkAbQwBVHHJtFcjZzL9q+cKJvyPwKUXez8s+07VdGUKpyOuM2tiHPqE2gbU4+NIn2wou0o3PWhSEa2Ybeg==
+
 "@types/aws-sdk@^2.7.0":
   version "2.7.0"
   resolved "https://registry.npmjs.org/@types/aws-sdk/-/aws-sdk-2.7.0.tgz"
