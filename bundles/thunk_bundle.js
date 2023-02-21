@@ -27,10 +27,6 @@ module.exports = (() => {
     return to;
   };
   var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-    // If the importer is in node compatibility mode or this is not an ESM
-    // file that has been converted to a CommonJS file using a Babel-
-    // compatible transform (i.e. "__esModule" has not been set), then set
-    // "default" to the CommonJS "module.exports" for node compatibility.
     isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
     mod
   ));
@@ -1315,8 +1311,7 @@ module.exports = (() => {
         if (first === void 0 || last === void 0) {
           boundsError(offset, this.length - 8);
         }
-        const val = (first << 24) + // Overflow
-        this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + this[++offset];
+        const val = (first << 24) + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + this[++offset];
         return (BigInt(val) << BigInt(32)) + BigInt(this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last);
       }, "readBigInt64BE"));
       Buffer4.prototype.readFloatLE = /* @__PURE__ */ __name(function readFloatLE(offset, noAssert) {
@@ -2437,7 +2432,6 @@ module.exports = (() => {
         "%encodeURIComponent%": encodeURIComponent,
         "%Error%": Error,
         "%eval%": eval,
-        // eslint-disable-line no-eval
         "%EvalError%": EvalError,
         "%Float32Array%": typeof Float32Array === "undefined" ? undefined2 : Float32Array,
         "%Float64Array%": typeof Float64Array === "undefined" ? undefined2 : Float64Array,
@@ -2811,7 +2805,6 @@ module.exports = (() => {
         "%encodeURIComponent%": encodeURIComponent,
         "%Error%": Error,
         "%eval%": eval,
-        // eslint-disable-line no-eval
         "%EvalError%": EvalError,
         "%Float32Array%": typeof Float32Array === "undefined" ? undefined2 : Float32Array,
         "%Float64Array%": typeof Float64Array === "undefined" ? undefined2 : Float64Array,
@@ -3687,7 +3680,6 @@ module.exports = (() => {
           node.value = value;
         } else {
           objects.next = {
-            // eslint-disable-line no-param-reassign
             key,
             next: objects.next,
             value
@@ -4029,7 +4021,6 @@ module.exports = (() => {
         encodeValuesOnly: false,
         format: defaultFormat,
         formatter: formats.formatters[defaultFormat],
-        // deprecated
         indices: false,
         serializeDate: /* @__PURE__ */ __name(function serializeDate(date) {
           return toISO.call(date);
@@ -4425,7 +4416,6 @@ module.exports = (() => {
           comma: typeof opts.comma === "boolean" ? opts.comma : defaults.comma,
           decoder: typeof opts.decoder === "function" ? opts.decoder : defaults.decoder,
           delimiter: typeof opts.delimiter === "string" || utils.isRegExp(opts.delimiter) ? opts.delimiter : defaults.delimiter,
-          // eslint-disable-next-line no-implicit-coercion, no-extra-parens
           depth: typeof opts.depth === "number" || opts.depth === false ? +opts.depth : defaults.depth,
           ignoreQueryPrefix: opts.ignoreQueryPrefix === true,
           interpretNumericEntities: typeof opts.interpretNumericEntities === "boolean" ? opts.interpretNumericEntities : defaults.interpretNumericEntities,
@@ -4580,22 +4570,15 @@ module.exports = (() => {
       __name(trimLeft, "trimLeft");
       var rules = [
         ["#", "hash"],
-        // Extract from the back.
         ["?", "query"],
-        // Extract from the back.
         /* @__PURE__ */ __name(function sanitize(address, url) {
           return isSpecial(url.protocol) ? address.replace(/\\/g, "/") : address;
         }, "sanitize"),
         ["/", "pathname"],
-        // Extract from the back.
         ["@", "auth", 1],
-        // Extract from the front.
         [NaN, "host", void 0, 1, 1],
-        // Set left over value.
         [/:(\d*)$/, "port", void 0, 1],
-        // RegExp the back.
         [NaN, "hostname", void 0, 1, 1]
-        // Set left over.
       ];
       var ignore = { hash: 1, query: 1 };
       function lolcation(loc) {
@@ -5168,7 +5151,6 @@ module.exports = (() => {
         "%encodeURIComponent%": encodeURIComponent,
         "%Error%": Error,
         "%eval%": eval,
-        // eslint-disable-line no-eval
         "%EvalError%": EvalError,
         "%Float32Array%": typeof Float32Array === "undefined" ? undefined2 : Float32Array,
         "%Float64Array%": typeof Float64Array === "undefined" ? undefined2 : Float64Array,
@@ -6010,7 +5992,6 @@ module.exports = (() => {
         "null": "bold",
         "string": "green",
         "date": "magenta",
-        // "name": intentionally not styling
         "regexp": "red"
       };
       function stylizeWithColor(str, styleType) {
@@ -6035,9 +6016,7 @@ module.exports = (() => {
       }
       __name(arrayToHash, "arrayToHash");
       function formatValue(ctx, value, recurseTimes) {
-        if (ctx.customInspect && value && isFunction(value.inspect) && // Filter out the util module, it's inspect function is special
-        value.inspect !== exports.inspect && // Also filter out any prototype objects using the circular check.
-        !(value.constructor && value.constructor.prototype === value)) {
+        if (ctx.customInspect && value && isFunction(value.inspect) && value.inspect !== exports.inspect && !(value.constructor && value.constructor.prototype === value)) {
           var ret = value.inspect(recurseTimes, ctx);
           if (!isString(ret)) {
             ret = formatValue(ctx, ret, recurseTimes);
@@ -6301,8 +6280,7 @@ module.exports = (() => {
       __name(isFunction, "isFunction");
       exports.isFunction = isFunction;
       function isPrimitive(arg) {
-        return arg === null || typeof arg === "boolean" || typeof arg === "number" || typeof arg === "string" || typeof arg === "symbol" || // ES6 symbol
-        typeof arg === "undefined";
+        return arg === null || typeof arg === "boolean" || typeof arg === "number" || typeof arg === "string" || typeof arg === "symbol" || typeof arg === "undefined";
       }
       __name(isPrimitive, "isPrimitive");
       exports.isPrimitive = isPrimitive;
@@ -6543,24 +6521,16 @@ module.exports = (() => {
 
   // api.ts
   var UserVisibleError = class extends Error {
-    /**
-     * Use to construct a user-visible error.
-     */
     constructor(message, internalError) {
       super(message);
-      /** @hidden */
       this.isUserVisible = true;
       this.internalError = internalError;
     }
   };
   __name(UserVisibleError, "UserVisibleError");
   var StatusCodeError = class extends Error {
-    /** @hidden */
     constructor(statusCode, body, options, response) {
       super(`${statusCode} - ${JSON.stringify(body)}`);
-      /**
-       * The name of the error, for identification purposes.
-       */
       this.name = "StatusCodeError";
       this.statusCode = statusCode;
       this.body = body;
@@ -6572,22 +6542,16 @@ module.exports = (() => {
       }
       this.response = { ...response, body: responseBody };
     }
-    /** Returns if the error is an instance of StatusCodeError. Note that `instanceof` may not work. */
     static isStatusCodeError(err) {
       return "name" in err && err.name === StatusCodeError.name;
     }
   };
   __name(StatusCodeError, "StatusCodeError");
   var MissingScopesError = class extends Error {
-    /** @hidden */
     constructor(message) {
       super(message || "Additional permissions are required");
-      /**
-       * The name of the error, for identification purposes.
-       */
       this.name = "MissingScopesError";
     }
-    /** Returns if the error is an instance of MissingScopesError. Note that `instanceof` may not work. */
     static isMissingScopesError(err) {
       return "name" in err && err.name === MissingScopesError.name;
     }
@@ -6679,7 +6643,6 @@ module.exports = (() => {
     URIError
   ];
   var recognizableCodaErrorClasses = [
-    // StatusCodeError doesn't have the new StatusCodeError(message) constructor but it's okay.
     StatusCodeError,
     MissingScopesError
   ];
@@ -7073,24 +7036,16 @@ module.exports = (() => {
   __name(setUpBufferForTest, "setUpBufferForTest");
   return __toCommonJS(thunk_exports);
 })();
-/*! Bundled license information:
-
-ieee754/index.js:
-  (*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> *)
-
-buffer/index.js:
-  (*!
-   * The buffer module from node.js, for the browser.
-   *
-   * @author   Feross Aboukhadijeh <https://feross.org>
-   * @license  MIT
-   *)
-
-pascalcase/index.js:
-  (*!
-   * pascalcase <https://github.com/jonschlinkert/pascalcase>
-   *
-   * Copyright (c) 2015-present, Jon ("Schlink") Schlinkert.
-   * Licensed under the MIT License.
-   *)
-*/
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+/*!
+ * pascalcase <https://github.com/jonschlinkert/pascalcase>
+ *
+ * Copyright (c) 2015-present, Jon ("Schlink") Schlinkert.
+ * Licensed under the MIT License.
+ */
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
