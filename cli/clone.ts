@@ -17,10 +17,11 @@ interface CloneArgs {
   packIdOrUrl: string;
   codaApiEndpoint: string;
   apiToken?: string;
+  manifestDirectory?: string;
 }
 
-export async function handleClone({packIdOrUrl, codaApiEndpoint, apiToken}: ArgumentsCamelCase<CloneArgs>) {
-  const manifestDir = process.cwd();
+export async function handleClone({packIdOrUrl, codaApiEndpoint, apiToken, manifestDirectory}: ArgumentsCamelCase<CloneArgs>) {
+  const manifestDir = manifestDirectory || process.cwd();
   const packId = assertPackIdOrUrl(packIdOrUrl);
   const formattedEndpoint = formatEndpoint(codaApiEndpoint);
   apiToken = assertApiToken(codaApiEndpoint, apiToken);
